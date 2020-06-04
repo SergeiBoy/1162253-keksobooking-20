@@ -23,29 +23,31 @@ var getRandomNumber = function (number) {
 };
 
 var createOffer = function (i) {
-  var offering = {};
   var locationX = PIN_X_RANGE[0] + getRandomNumber(PIN_X_RANGE[1] - PIN_X_RANGE[0]);
   var locationY = PIN_Y_RANGE[0] + getRandomNumber(PIN_Y_RANGE[1] - PIN_Y_RANGE[0]);
 
-  offering.author = {};
-  offering.author.avatar = 'img/avatars/user0' + i + '.png';
-
-  offering.offer = {};
-  offering.offer.title = 'Милые апартаменты';
-  offering.offer.address = locationX + ', ' + locationY;
-  offering.offer.price = 500 + getRandomNumber(2000);
-  offering.offer.type = APARTMENT_TYPES[getRandomNumber(APARTMENT_TYPES.length - 1)];
-  offering.offer.rooms = getRandomNumber(MAX_ROOM_QUANTITY - 1) + 1;
-  offering.offer.guests = getRandomNumber(MAX_GUEST_QUANTITY - 1) + 1;
-  offering.offer.checkin = CHECKIN_TIMES[getRandomNumber(CHECKIN_TIMES.length - 1)];
-  offering.offer.checkout = CHECKOUT_TIMES[getRandomNumber(CHECKOUT_TIMES.length - 1)];
-  offering.offer.features = FEATURES.slice(0, getRandomNumber(FEATURES.length - 1) + 1);
-  offering.offer.description = 'Просторная уютная квартира';
-  offering.offer.photos = PHOTOS.slice(0, getRandomNumber(PHOTOS.length - 1) + 1);
-
-  offering.location = {};
-  offering.location.x = locationX;
-  offering.location.y = locationY;
+  var offering = {
+    author: {
+      avatar: 'img/avatars/user0' + i + '.png',
+    },
+    offer: {
+      title: 'Милые апартаменты',
+      address: locationX + ', ' + locationY,
+      price: 500 + getRandomNumber(2000),
+      type: APARTMENT_TYPES[getRandomNumber(APARTMENT_TYPES.length - 1)],
+      rooms: getRandomNumber(MAX_ROOM_QUANTITY - 1) + 1,
+      guests: getRandomNumber(MAX_GUEST_QUANTITY - 1) + 1,
+      checkin: CHECKIN_TIMES[getRandomNumber(CHECKIN_TIMES.length - 1)],
+      checkout: CHECKOUT_TIMES[getRandomNumber(CHECKOUT_TIMES.length - 1)],
+      features: FEATURES.slice(0, getRandomNumber(FEATURES.length - 1) + 1),
+      description: 'Просторная уютная квартира',
+      photos: PHOTOS.slice(0, getRandomNumber(PHOTOS.length - 1) + 1),
+    },
+    location: {
+      x: locationX,
+      y: locationY,
+    },
+  };
 
   return offering;
 };
