@@ -11,8 +11,12 @@ var CHECKIN_TIMES = ['12:00', '13:00', '14:00'];
 var CHECKOUT_TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var PIN_X_OFFSET = -25;
-var PIN_Y_OFFSET = -70;
+var PIN_X_OFFSET = 25;
+var PIN_Y_OFFSET = 70;
+var PIN_X_OFFSET_INACTIVE = 33;
+var PIN_Y_OFFSET_INACTIVE = 33;
+var PIN_X_OFFSET_ACTIVE = 31;
+var PIN_Y_OFFSET_ACTIVE = 84;
 
 var offers = [];
 var map = document.querySelector('.map');
@@ -20,6 +24,30 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pi
 var pinsOnMap = document.querySelector('.map__pins');
 var offerTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var filter = map.querySelector('.map__filters-container');
+
+var mainPin = pinsOnMap.querySelector('.map__pin--main');
+
+var form = document.querySelector('.ad-form');
+var inputAvatarImage = form.querySelector('#avatar');
+var inputTitle = form.querySelector('#title');
+var inputAddress = form.querySelector('#address');
+var selectHousingType = form.querySelector('#type');
+var inputPrice = form.querySelector('#price');
+var selectTimeIn = form.querySelector('#timein');
+var selectTimeOut = form.querySelector('#timeout');
+var selectRoomNumber = form.querySelector('#room_number');
+var selectGuestCapacity = form.querySelector('#capacity');
+var fieldsetFeatures = form.querySelector('.features');
+var textareaDescription = form.querySelector('#description');
+var inputHousingImage = form.querySelector('#images');
+var submitButton = form.querySelector('.ad-form__submit');
+var resetButton = form.querySelector('.ad-form__reset');
+
+var selectFilterHousingType = filter.querySelector('#housing-type');
+var selectFilterPrice = filter.querySelector('#housing-price');
+var selectFilterRoomNumber = filter.querySelector('#housing-rooms');
+var selectFilterGuestCapacity = filter.querySelector('#housing-guests');
+var fieldsetFilterFeatures = filter.querySelector('#housing-features');
 
 var getRandomNumber = function (number) {
   return Math.floor(Math.random() * (number + 1));
@@ -86,7 +114,7 @@ var createOffers = function () {
 var renderPin = function (offering) {
   var pinElement = pinTemplate.cloneNode(true);
 
-  pinElement.style = 'left: ' + (offering.location.x + PIN_X_OFFSET) + 'px; top: ' + (offering.location.y + PIN_Y_OFFSET) + 'px';
+  pinElement.style = 'left: ' + (offering.location.x - PIN_X_OFFSET) + 'px; top: ' + (offering.location.y - PIN_Y_OFFSET) + 'px';
   pinElement.querySelector('img').src = offering.author.avatar;
   pinElement.querySelector('img').alt = offering.offer.title;
 
@@ -157,8 +185,77 @@ var renderPins = function () {
   pinsOnMap.appendChild(fragment);
 };
 
-createOffers();
-map.classList.remove('map--faded');
-renderPins();
+var setAddress = function (left, top, leftOffset, topOffset) {
+  return (+left.replace('px', '') + leftOffset) + ', ' + (+top.replace('px', '') + topOffset);
+};
 
-filter.before(renderOffer(offers[0]));
+var activate = function () {
+  map.classList.remove('map--faded');
+  renderPins();
+
+  form.classList.remove('ad-form--disabled');
+  inputAvatarImage.disabled = false;
+  inputTitle.disabled = false;
+  inputAddress.disabled = false;
+  selectHousingType.disabled = false;
+  inputPrice.disabled = false;
+  selectTimeIn.disabled = false;
+  selectTimeOut.disabled = false;
+  selectRoomNumber.disabled = false;
+  selectGuestCapacity.disabled = false;
+  fieldsetFeatures.disabled = false;
+  textareaDescription.disabled = false;
+  inputHousingImage.disabled = false;
+  submitButton.disabled = false;
+  resetButton.disabled = false;
+
+  selectFilterHousingType.disabled = false;
+  selectFilterPrice.disabled = false;
+  selectFilterRoomNumber.disabled = false;
+  selectFilterGuestCapacity.disabled = false;
+  fieldsetFilterFeatures.disabled = false;
+
+  inputAddress.value = setAddress(mainPin.style.left, mainPin.style.top, PIN_X_OFFSET_ACTIVE, PIN_Y_OFFSET_ACTIVE);
+};
+
+createOffers();
+
+inputAddress.value = setAddress(mainPin.style.left, mainPin.style.top, PIN_X_OFFSET_INACTIVE, PIN_Y_OFFSET_INACTIVE);
+
+inputAvatarImage.disabled = true;
+inputTitle.disabled = true;
+inputAddress.disabled = true;
+selectHousingType.disabled = true;
+inputPrice.disabled = true;
+selectTimeIn.disabled = true;
+selectTimeOut.disabled = true;
+selectRoomNumber.disabled = true;
+selectGuestCapacity.disabled = true;
+fieldsetFeatures.disabled = true;
+textareaDescription.disabled = true;
+inputHousingImage.disabled = true;
+submitButton.disabled = true;
+resetButton.disabled = true;
+
+selectFilterHousingType.disabled = true;
+selectFilterPrice.disabled = true;
+selectFilterRoomNumber.disabled = true;
+selectFilterGuestCapacity.disabled = true;
+fieldsetFilterFeatures.disabled = true;
+
+mainPin.addEventListener('mousedown', function (evt) {
+  if (evt.button === 0) {
+    activate();
+  }
+});
+
+mainPin.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+    activate();
+  }
+});
+
+// filter.before(renderOffer(offers[0]));
+// Чтобы не было ошибки eslint:
+renderOffer(offers[0]);
