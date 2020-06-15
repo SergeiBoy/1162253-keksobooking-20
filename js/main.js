@@ -185,8 +185,31 @@ var renderPins = function () {
   pinsOnMap.appendChild(fragment);
 };
 
-var setAddress = function (left, top, leftOffset, topOffset) {
-  return (+left.replace('px', '') + leftOffset) + ', ' + (+top.replace('px', '') + topOffset);
+var setFormsDisabled = function (isDisabled) {
+  inputAvatarImage.disabled = isDisabled;
+  inputTitle.disabled = isDisabled;
+  inputAddress.disabled = isDisabled;
+  selectHousingType.disabled = isDisabled;
+  inputPrice.disabled = isDisabled;
+  selectTimeIn.disabled = isDisabled;
+  selectTimeOut.disabled = isDisabled;
+  selectRoomNumber.disabled = isDisabled;
+  selectGuestCapacity.disabled = isDisabled;
+  fieldsetFeatures.disabled = isDisabled;
+  textareaDescription.disabled = isDisabled;
+  inputHousingImage.disabled = isDisabled;
+  submitButton.disabled = isDisabled;
+  resetButton.disabled = isDisabled;
+
+  selectFilterHousingType.disabled = isDisabled;
+  selectFilterPrice.disabled = isDisabled;
+  selectFilterRoomNumber.disabled = isDisabled;
+  selectFilterGuestCapacity.disabled = isDisabled;
+  fieldsetFilterFeatures.disabled = isDisabled;
+};
+
+var setAddress = function (left, top) {
+  inputAddress.value = left + ', ' + top;
 };
 
 var coordinateGuestsRooms = function () {
@@ -203,33 +226,15 @@ var coordinateGuestsRooms = function () {
   }
 };
 
-var activate = function () {
+var activatePage = function () {
   map.classList.remove('map--faded');
   renderPins();
 
   form.classList.remove('ad-form--disabled');
-  inputAvatarImage.disabled = false;
-  inputTitle.disabled = false;
-  inputAddress.disabled = false;
-  selectHousingType.disabled = false;
-  inputPrice.disabled = false;
-  selectTimeIn.disabled = false;
-  selectTimeOut.disabled = false;
-  selectRoomNumber.disabled = false;
-  selectGuestCapacity.disabled = false;
-  fieldsetFeatures.disabled = false;
-  textareaDescription.disabled = false;
-  inputHousingImage.disabled = false;
-  submitButton.disabled = false;
-  resetButton.disabled = false;
 
-  selectFilterHousingType.disabled = false;
-  selectFilterPrice.disabled = false;
-  selectFilterRoomNumber.disabled = false;
-  selectFilterGuestCapacity.disabled = false;
-  fieldsetFilterFeatures.disabled = false;
+  setFormsDisabled(false);
 
-  inputAddress.value = setAddress(mainPin.style.left, mainPin.style.top, PIN_X_OFFSET_ACTIVE, PIN_Y_OFFSET_ACTIVE);
+  setAddress(+mainPin.style.left.replace('px', '') + PIN_X_OFFSET_ACTIVE, +mainPin.style.top.replace('px', '') + PIN_Y_OFFSET_ACTIVE);
 
   coordinateGuestsRooms();
   selectGuestCapacity.addEventListener('change', function () {
@@ -242,39 +247,20 @@ var activate = function () {
 
 createOffers();
 
-inputAddress.value = setAddress(mainPin.style.left, mainPin.style.top, PIN_X_OFFSET_INACTIVE, PIN_Y_OFFSET_INACTIVE);
+setAddress(+mainPin.style.left.replace('px', '') + PIN_X_OFFSET_INACTIVE, +mainPin.style.top.replace('px', '') + PIN_Y_OFFSET_INACTIVE);
 
-inputAvatarImage.disabled = true;
-inputTitle.disabled = true;
-inputAddress.disabled = true;
-selectHousingType.disabled = true;
-inputPrice.disabled = true;
-selectTimeIn.disabled = true;
-selectTimeOut.disabled = true;
-selectRoomNumber.disabled = true;
-selectGuestCapacity.disabled = true;
-fieldsetFeatures.disabled = true;
-textareaDescription.disabled = true;
-inputHousingImage.disabled = true;
-submitButton.disabled = true;
-resetButton.disabled = true;
-
-selectFilterHousingType.disabled = true;
-selectFilterPrice.disabled = true;
-selectFilterRoomNumber.disabled = true;
-selectFilterGuestCapacity.disabled = true;
-fieldsetFilterFeatures.disabled = true;
+setFormsDisabled(true);
 
 mainPin.addEventListener('mousedown', function (evt) {
   if (evt.button === 0) {
-    activate();
+    activatePage();
   }
 });
 
 mainPin.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
     evt.preventDefault();
-    activate();
+    activatePage();
   }
 });
 
