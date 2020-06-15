@@ -189,6 +189,20 @@ var setAddress = function (left, top, leftOffset, topOffset) {
   return (+left.replace('px', '') + leftOffset) + ', ' + (+top.replace('px', '') + topOffset);
 };
 
+var coordinateGuestsRooms = function () {
+  if (selectRoomNumber.value === '1' && selectGuestCapacity.value !== '1') {
+    selectGuestCapacity.setCustomValidity('Для одной комнаты вы можете выбрать только "для одного гостя"');
+  } else if (selectRoomNumber.value === '2' && (selectGuestCapacity.value === '3' || selectGuestCapacity.value === '0')) {
+    selectGuestCapacity.setCustomValidity('Для двух комнат вы можете выбрать только "для одного гостя" или "для двух гостей"');
+  } else if (selectRoomNumber.value === '3' && selectGuestCapacity.value === '0') {
+    selectGuestCapacity.setCustomValidity('Для трех комнат вы можете выбрать только "для одного гостя", "для двух гостей" или "для трех гостей"');
+  } else if (selectRoomNumber.value === '100' && selectGuestCapacity.value !== '0') {
+    selectGuestCapacity.setCustomValidity('Для 100 комнат вы можете выбрать только "не для гостей"');
+  } else {
+    selectGuestCapacity.setCustomValidity('');
+  }
+};
+
 var activate = function () {
   map.classList.remove('map--faded');
   renderPins();
@@ -216,6 +230,14 @@ var activate = function () {
   fieldsetFilterFeatures.disabled = false;
 
   inputAddress.value = setAddress(mainPin.style.left, mainPin.style.top, PIN_X_OFFSET_ACTIVE, PIN_Y_OFFSET_ACTIVE);
+
+  coordinateGuestsRooms();
+  selectGuestCapacity.addEventListener('change', function () {
+    coordinateGuestsRooms();
+  });
+  selectRoomNumber.addEventListener('change', function () {
+    coordinateGuestsRooms();
+  });
 };
 
 createOffers();
