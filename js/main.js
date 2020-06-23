@@ -6,6 +6,7 @@
 
     window.backend.load(function (offers) {
       window.map.renderPins(offers);
+      window.data.offers = offers;
     }, window.backend.onError);
 
     window.form.setFormsDisabled(false);
