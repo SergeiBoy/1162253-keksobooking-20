@@ -6,10 +6,10 @@
   var mainPin = pinsOnMap.querySelector('.map__pin--main');
   var filter = document.querySelector('.map__filters-container');
 
-  var renderPins = function () {
+  var renderPins = function (offers) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.data.offers.length; i++) {
-      fragment.appendChild(window.pin.renderPin(window.data.offers[i]));
+    for (var i = 0; i < offers.length; i++) {
+      fragment.appendChild(window.pin.renderPin(offers[i]));
     }
     pinsOnMap.appendChild(fragment);
   };

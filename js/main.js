@@ -3,7 +3,11 @@
 (function () {
   var activatePage = function () {
     window.map.map.classList.remove('map--faded');
-    window.map.renderPins();
+
+    window.backend.load(function (offers) {
+      window.map.renderPins(offers);
+      window.data.offers = offers;
+    }, window.backend.onError);
 
     window.form.setFormsDisabled(false);
   };
