@@ -7,6 +7,7 @@
   var filter = document.querySelector('.map__filters-container');
 
   var renderPins = function (offers) {
+    pinsOnMap.innerHTML = '';
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < offers.length; i++) {
       fragment.appendChild(window.pin.renderPin(offers[i]));
