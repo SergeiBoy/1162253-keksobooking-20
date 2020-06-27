@@ -5,14 +5,16 @@
     window.map.map.classList.remove('map--faded');
 
     window.backend.load(function (offers) {
-      window.map.renderPins(offers);
+      window.map.renderPins(window.filter.filterOffers(offers));
       window.data.offers = offers;
+      window.filter.setFilterDisabled(false);
     }, window.backend.onError);
 
-    window.form.setFormsDisabled(false);
+    window.form.setFormDisabled(false);
   };
 
-  window.form.setFormsDisabled(true);
+  window.form.setFormDisabled(true);
+  window.filter.setFilterDisabled(true);
 
   window.map.mainPin.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {

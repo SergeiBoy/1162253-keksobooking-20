@@ -2,8 +2,8 @@
 
 (function () {
   var OFFER_QUANTITY = 8;
-  var PIN_X_RANGE = [0, 1200];
-  var PIN_Y_RANGE = [130, 630];
+  var PIN_X_RANGES = [0, 1200];
+  var PIN_Y_RANGES = [130, 630];
   var APARTMENT_TYPES = ['palace', 'flat', 'house', 'bungalo'];
   var APARTMENT_TYPES_TRANSLATION = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
   var MAX_ROOM_QUANTITY = 5;
@@ -18,8 +18,8 @@
   };
 
   var createOffer = function (i) {
-    var locationX = PIN_X_RANGE[0] + getRandomNumber(PIN_X_RANGE[1] - PIN_X_RANGE[0]);
-    var locationY = PIN_Y_RANGE[0] + getRandomNumber(PIN_Y_RANGE[1] - PIN_Y_RANGE[0]);
+    var locationX = PIN_X_RANGES[0] + getRandomNumber(PIN_X_RANGES[1] - PIN_X_RANGES[0]);
+    var locationY = PIN_Y_RANGES[0] + getRandomNumber(PIN_Y_RANGES[1] - PIN_Y_RANGES[0]);
 
     var offering = {
       author: {

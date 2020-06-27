@@ -17,13 +17,6 @@
   var submitButton = form.querySelector('.ad-form__submit');
   var resetButton = form.querySelector('.ad-form__reset');
 
-  var filter = document.querySelector('.map__filters-container');
-  var selectFilterHousingType = filter.querySelector('#housing-type');
-  var selectFilterPrice = filter.querySelector('#housing-price');
-  var selectFilterRoomNumber = filter.querySelector('#housing-rooms');
-  var selectFilterGuestCapacity = filter.querySelector('#housing-guests');
-  var fieldsetFilterFeatures = filter.querySelector('#housing-features');
-
   var PIN_X_OFFSET_INACTIVE = 33;
   var PIN_Y_OFFSET_INACTIVE = 33;
   var PIN_X_OFFSET_ACTIVE = 31;
@@ -51,7 +44,7 @@
     inputAddress.value = left + ', ' + top;
   };
 
-  var setFormsDisabled = function (isDisabled) {
+  var setFormDisabled = function (isDisabled) {
     inputAvatarImage.disabled = isDisabled;
     inputTitle.disabled = isDisabled;
     inputAddress.disabled = isDisabled;
@@ -66,12 +59,6 @@
     inputHousingImage.disabled = isDisabled;
     submitButton.disabled = isDisabled;
     resetButton.disabled = isDisabled;
-
-    selectFilterHousingType.disabled = isDisabled;
-    selectFilterPrice.disabled = isDisabled;
-    selectFilterRoomNumber.disabled = isDisabled;
-    selectFilterGuestCapacity.disabled = isDisabled;
-    fieldsetFilterFeatures.disabled = isDisabled;
 
     if (isDisabled) {
       form.classList.add('ad-form--disabled');
@@ -88,7 +75,6 @@
   };
 
   window.form = {
-    setFormsDisabled: setFormsDisabled,
+    setFormDisabled: setFormDisabled,
   };
 })();
-
