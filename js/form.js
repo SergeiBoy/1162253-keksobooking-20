@@ -17,6 +17,12 @@
   var submitButton = form.querySelector('.ad-form__submit');
   var resetButton = form.querySelector('.ad-form__reset');
 
+  var avatarChooser = form.querySelector('.ad-form-header__input');
+  var avatarPreview = form.querySelector('.ad-form-header__preview img');
+
+  var housingPhotoChooser = form.querySelector('.ad-form__input');
+  var housingPhotoPreview = form.querySelector('.ad-form__photo img');
+
   var PIN_X_OFFSET_INACTIVE = 33;
   var PIN_Y_OFFSET_INACTIVE = 33;
   var PIN_X_OFFSET_ACTIVE = 31;
@@ -73,6 +79,9 @@
       setAddress(+window.map.mainPin.style.left.replace('px', '') + PIN_X_OFFSET_ACTIVE, +window.map.mainPin.style.top.replace('px', '') + PIN_Y_OFFSET_ACTIVE);
     }
   };
+
+  window.imagePreview.showImagePreview(avatarChooser, avatarPreview);
+  window.imagePreview.showImagePreview(housingPhotoChooser, housingPhotoPreview);
 
   window.form = {
     setFormDisabled: setFormDisabled,
