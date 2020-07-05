@@ -42,8 +42,61 @@
     }
   };
 
-  var onSelectChange = function () {
+  var onSelectGuestRoomChange = function () {
     coordinateGuestsRooms();
+  };
+
+  var coordinatePriceAndHousingType = function () {
+    var minPrice;
+    var housingType = selectHousingType.value;
+    switch (housingType) {
+      case ('bungalo'): {
+        minPrice = '0';
+        break;
+      }
+      case ('flat'): {
+        minPrice = '1000';
+        break;
+      }
+      case ('house'): {
+        minPrice = '5000';
+        break;
+      }
+      case ('palace'): {
+        minPrice = '10000';
+        break;
+      }
+      default: {
+        minPrice = '0';
+      }
+    }
+
+    inputPrice.min = minPrice;
+    inputPrice.placeholder = minPrice;
+  };
+
+  var onSelectHousingTypeChange = function () {
+    coordinatePriceAndHousingType();
+  };
+
+  var onSelectTimeInChange = function () {
+    if (selectTimeIn.value === '12:00') {
+      selectTimeOut.value = '12:00';
+    } else if (selectTimeIn.value === '13:00') {
+      selectTimeOut.value = '13:00';
+    } else if (selectTimeIn.value === '14:00') {
+      selectTimeOut.value = '14:00';
+    }
+  };
+
+  var onSelectTimeOutChange = function () {
+    if (selectTimeOut.value === '12:00') {
+      selectTimeIn.value = '12:00';
+    } else if (selectTimeOut.value === '13:00') {
+      selectTimeIn.value = '13:00';
+    } else if (selectTimeOut.value === '14:00') {
+      selectTimeIn.value = '14:00';
+    }
   };
 
   var setAddress = function (left, top) {
@@ -68,14 +121,21 @@
 
     if (isDisabled) {
       form.classList.add('ad-form--disabled');
-      selectGuestCapacity.removeEventListener('change', onSelectChange);
-      selectRoomNumber.removeEventListener('change', onSelectChange);
+      selectGuestCapacity.removeEventListener('change', onSelectGuestRoomChange);
+      selectRoomNumber.removeEventListener('change', onSelectGuestRoomChange);
+      selectHousingType.removeEventListener('change', onSelectHousingTypeChange);
+      selectTimeIn.removeEventListener('change', onSelectTimeInChange);
+      selectTimeOut.removeEventListener('change', onSelectTimeOutChange);
       setAddress(+window.map.mainPin.style.left.replace('px', '') + PIN_X_OFFSET_INACTIVE, +window.map.mainPin.style.top.replace('px', '') + PIN_Y_OFFSET_INACTIVE);
     } else {
       form.classList.remove('ad-form--disabled');
       coordinateGuestsRooms();
-      selectGuestCapacity.addEventListener('change', onSelectChange);
-      selectRoomNumber.addEventListener('change', onSelectChange);
+      selectGuestCapacity.addEventListener('change', onSelectGuestRoomChange);
+      selectRoomNumber.addEventListener('change', onSelectGuestRoomChange);
+      coordinatePriceAndHousingType();
+      selectHousingType.addEventListener('change', onSelectHousingTypeChange);
+      selectTimeIn.addEventListener('change', onSelectTimeInChange);
+      selectTimeOut.addEventListener('change', onSelectTimeOutChange);
       setAddress(+window.map.mainPin.style.left.replace('px', '') + PIN_X_OFFSET_ACTIVE, +window.map.mainPin.style.top.replace('px', '') + PIN_Y_OFFSET_ACTIVE);
     }
   };

@@ -2,27 +2,46 @@
 
 (function () {
   var offerTemplate = document.querySelector('#card').content.querySelector('.map__card');
+  var filter = document.querySelector('.map__filters-container');
 
   var formatNounPluralForm = function (number, one, two, many) {
     var mod10 = number % 10;
     var mod100 = number % 100;
 
     switch (true) {
-      case (mod100 >= 11 && mod100 <= 20):
+      case (mod100 >= 11 && mod100 <= 20): {
         return many;
-
-      case (mod10 > 5):
+      }
+      case (mod10 > 5): {
         return many;
-
-      case (mod10 === 1):
+      }
+      case (mod10 === 1): {
         return one;
-
-      case (mod10 >= 2 && mod10 <= 4):
+      }
+      case (mod10 >= 2 && mod10 <= 4): {
         return two;
-
-      default:
+      }
+      default: {
         return many;
+      }
     }
+  };
+
+  var closeOpenCard = function () {
+    var openCard = document.querySelector('.map__card');
+    if (openCard) {
+      openCard.remove();
+    }
+    document.removeEventListener('keydown', onOpenCardEscPress);
+  };
+
+  var onOpenCardEscPress = function (evt) {
+    var openCard = document.querySelector('.map__card');
+    if (evt.key === 'Escape' && openCard) {
+      evt.preventDefault();
+      openCard.remove();
+    }
+    document.removeEventListener('keydown', onOpenCardEscPress);
   };
 
   var renderOffer = function (offering) {
@@ -78,10 +97,17 @@
 
     offerElement.querySelector('.popup__avatar').src = offering.author.avatar;
 
-    return offerElement;
+    offerElement.querySelector('.popup__close').addEventListener('click', function () {
+      closeOpenCard();
+    });
+
+    document.addEventListener('keydown', onOpenCardEscPress);
+
+    filter.before(offerElement);
   };
 
   window.card = {
     renderOffer: renderOffer,
+    closeOpenCard: closeOpenCard,
   };
 })();

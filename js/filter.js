@@ -17,6 +17,7 @@
   };
 
   var onSelectChange = function () {
+    window.card.closeOpenCard();
     window.map.renderPins(filterOffers(window.data.offers));
   };
 
