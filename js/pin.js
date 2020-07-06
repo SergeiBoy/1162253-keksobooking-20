@@ -12,10 +12,7 @@
     pinElement.querySelector('img').src = offering.author.avatar;
     pinElement.querySelector('img').alt = offering.offer.title;
 
-    pinElement.addEventListener('click', function () {
-      window.card.closeOpenCard();
-      window.card.renderOffer(offering);
-    });
+    pinElement.offering = offering;
 
     return pinElement;
   };
