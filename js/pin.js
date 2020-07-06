@@ -12,6 +12,8 @@
     pinElement.querySelector('img').src = offering.author.avatar;
     pinElement.querySelector('img').alt = offering.offer.title;
 
+    pinElement.offering = offering;
+
     return pinElement;
   };
 
