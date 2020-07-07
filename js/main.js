@@ -11,16 +11,20 @@
     }, window.backend.onError);
 
     window.form.setFormDisabled(false);
+    window.main.isPageActive = true;
+  };
+
+  var onMainPinClick = function (evt) {
+    if (evt.button === 0) {
+      activatePage();
+      window.map.mainPin.removeEventListener('mousedown', onMainPinClick);
+    }
   };
 
   window.form.setFormDisabled(true);
   window.filter.setFilterDisabled(true);
 
-  window.map.mainPin.addEventListener('mousedown', function (evt) {
-    if (evt.button === 0) {
-      activatePage();
-    }
-  });
+  window.map.mainPin.addEventListener('mousedown', onMainPinClick);
 
   window.map.mainPin.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
@@ -28,4 +32,8 @@
       activatePage();
     }
   });
+
+  window.main = {
+    isPageActive: false,
+  };
 })();

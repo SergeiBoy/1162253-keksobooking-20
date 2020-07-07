@@ -99,8 +99,12 @@
     }
   };
 
-  var setAddress = function (left, top) {
-    inputAddress.value = left + ', ' + top;
+  var setAddress = function (left, top, isPageActive) {
+    if (isPageActive) {
+      inputAddress.value = (left + PIN_X_OFFSET_ACTIVE) + ', ' + (top + PIN_Y_OFFSET_ACTIVE);
+    } else {
+      inputAddress.value = (left + PIN_X_OFFSET_INACTIVE) + ', ' + (top + PIN_Y_OFFSET_INACTIVE);
+    }
   };
 
   var setFormDisabled = function (isDisabled) {
@@ -118,6 +122,7 @@
     inputHousingImage.disabled = isDisabled;
     submitButton.disabled = isDisabled;
     resetButton.disabled = isDisabled;
+    setAddress(+window.map.mainPin.style.left.replace('px', ''), +window.map.mainPin.style.top.replace('px', ''), !isDisabled);
 
     if (isDisabled) {
       form.classList.add('ad-form--disabled');
@@ -126,7 +131,6 @@
       selectHousingType.removeEventListener('change', onSelectHousingTypeChange);
       selectTimeIn.removeEventListener('change', onSelectTimeInChange);
       selectTimeOut.removeEventListener('change', onSelectTimeOutChange);
-      setAddress(+window.map.mainPin.style.left.replace('px', '') + PIN_X_OFFSET_INACTIVE, +window.map.mainPin.style.top.replace('px', '') + PIN_Y_OFFSET_INACTIVE);
     } else {
       form.classList.remove('ad-form--disabled');
       coordinateGuestsRooms();
@@ -136,7 +140,6 @@
       selectHousingType.addEventListener('change', onSelectHousingTypeChange);
       selectTimeIn.addEventListener('change', onSelectTimeInChange);
       selectTimeOut.addEventListener('change', onSelectTimeOutChange);
-      setAddress(+window.map.mainPin.style.left.replace('px', '') + PIN_X_OFFSET_ACTIVE, +window.map.mainPin.style.top.replace('px', '') + PIN_Y_OFFSET_ACTIVE);
     }
   };
 
@@ -145,5 +148,10 @@
 
   window.form = {
     setFormDisabled: setFormDisabled,
+    setAddress: setAddress,
+    PIN_X_OFFSET_INACTIVE: PIN_X_OFFSET_INACTIVE,
+    PIN_Y_OFFSET_INACTIVE: PIN_Y_OFFSET_INACTIVE,
+    PIN_X_OFFSET_ACTIVE: PIN_X_OFFSET_ACTIVE,
+    PIN_Y_OFFSET_ACTIVE: PIN_Y_OFFSET_ACTIVE,
   };
 })();
