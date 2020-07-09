@@ -17,16 +17,20 @@
   var submitButton = form.querySelector('.ad-form__submit');
   var resetButton = form.querySelector('.ad-form__reset');
 
+  var initialPricePlaceholder = inputPrice.placeholder;
+
   var avatarChooser = form.querySelector('.ad-form-header__input');
   var avatarPreview = form.querySelector('.ad-form-header__preview img');
+  var initialAvatarSrc = avatarPreview.src;
 
   var housingPhotoChooser = form.querySelector('.ad-form__input');
   var housingPhotoPreview = form.querySelector('.ad-form__photo img');
+  var initialPhotoSrc = housingPhotoPreview.src;
 
-  var PIN_X_OFFSET_INACTIVE = 33;
-  var PIN_Y_OFFSET_INACTIVE = 33;
-  var PIN_X_OFFSET_ACTIVE = 31;
-  var PIN_Y_OFFSET_ACTIVE = 84;
+  var MAIN_PIN_X_OFFSET_INACTIVE = 33;
+  var MAIN_PIN_Y_OFFSET_INACTIVE = 33;
+  var MAIN_PIN_X_OFFSET_ACTIVE = 33;
+  var MAIN_PIN_Y_OFFSET_ACTIVE = 76;
 
   var coordinateGuestsRooms = function () {
     if (selectRoomNumber.value === '1' && selectGuestCapacity.value !== '1') {
@@ -101,10 +105,18 @@
 
   var setAddress = function (left, top, isPageActive) {
     if (isPageActive) {
-      inputAddress.value = (left + PIN_X_OFFSET_ACTIVE) + ', ' + (top + PIN_Y_OFFSET_ACTIVE);
+      inputAddress.value = (left + MAIN_PIN_X_OFFSET_ACTIVE) + ', ' + (top + MAIN_PIN_Y_OFFSET_ACTIVE);
     } else {
-      inputAddress.value = (left + PIN_X_OFFSET_INACTIVE) + ', ' + (top + PIN_Y_OFFSET_INACTIVE);
+      inputAddress.value = (left + MAIN_PIN_X_OFFSET_INACTIVE) + ', ' + (top + MAIN_PIN_Y_OFFSET_INACTIVE);
     }
+  };
+
+  var onFormSubmit = function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), function () {
+      window.main.deactivatePage();
+      console.log('OK');
+    }, window.backend.onError);
   };
 
   var setFormDisabled = function (isDisabled) {
@@ -131,6 +143,10 @@
       selectHousingType.removeEventListener('change', onSelectHousingTypeChange);
       selectTimeIn.removeEventListener('change', onSelectTimeInChange);
       selectTimeOut.removeEventListener('change', onSelectTimeOutChange);
+      form.removeEventListener('submit', onFormSubmit);
+      inputPrice.placeholder = initialPricePlaceholder;
+      avatarPreview.src = initialAvatarSrc;
+      housingPhotoPreview.src = initialPhotoSrc;
     } else {
       form.classList.remove('ad-form--disabled');
       coordinateGuestsRooms();
@@ -140,6 +156,7 @@
       selectHousingType.addEventListener('change', onSelectHousingTypeChange);
       selectTimeIn.addEventListener('change', onSelectTimeInChange);
       selectTimeOut.addEventListener('change', onSelectTimeOutChange);
+      form.addEventListener('submit', onFormSubmit);
     }
   };
 
@@ -147,11 +164,12 @@
   window.imagePreview.showImagePreview(housingPhotoChooser, housingPhotoPreview);
 
   window.form = {
+    form: form,
     setFormDisabled: setFormDisabled,
     setAddress: setAddress,
-    PIN_X_OFFSET_INACTIVE: PIN_X_OFFSET_INACTIVE,
-    PIN_Y_OFFSET_INACTIVE: PIN_Y_OFFSET_INACTIVE,
-    PIN_X_OFFSET_ACTIVE: PIN_X_OFFSET_ACTIVE,
-    PIN_Y_OFFSET_ACTIVE: PIN_Y_OFFSET_ACTIVE,
+    MAIN_PIN_X_OFFSET_INACTIVE: MAIN_PIN_X_OFFSET_INACTIVE,
+    MAIN_PIN_Y_OFFSET_INACTIVE: MAIN_PIN_Y_OFFSET_INACTIVE,
+    MAIN_PIN_X_OFFSET_ACTIVE: MAIN_PIN_X_OFFSET_ACTIVE,
+    MAIN_PIN_Y_OFFSET_ACTIVE: MAIN_PIN_Y_OFFSET_ACTIVE,
   };
 })();

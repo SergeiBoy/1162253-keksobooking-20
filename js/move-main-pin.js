@@ -39,9 +39,9 @@
       };
 
       if (window.main.isPageActive) {
-        correctMainPinOffset(window.form.PIN_X_OFFSET_ACTIVE, window.form.PIN_Y_OFFSET_ACTIVE);
+        correctMainPinOffset(window.form.MAIN_PIN_X_OFFSET_ACTIVE, window.form.MAIN_PIN_Y_OFFSET_ACTIVE);
       } else {
-        correctMainPinOffset(window.form.PIN_X_OFFSET_INACTIVE, window.form.PIN_Y_OFFSET_INACTIVE);
+        correctMainPinOffset(window.form.MAIN_PIN_X_OFFSET_INACTIVE, window.form.MAIN_PIN_Y_OFFSET_INACTIVE);
       }
 
       window.map.mainPin.style.left = mainPinStyleLeft + 'px';

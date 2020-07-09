@@ -14,6 +14,19 @@
     window.main.isPageActive = true;
   };
 
+  var deactivatePage = function () {
+    window.map.map.classList.add('map--faded');
+    window.main.isPageActive = false;
+    window.map.removePins();
+    window.card.closeOpenCard();
+    window.map.setMainPinInInitialPosition();
+    window.form.form.reset();
+    window.filter.filter.reset();
+    window.form.setFormDisabled(true);
+    window.filter.setFilterDisabled(true);
+    window.map.mainPin.addEventListener('mousedown', onMainPinClick);
+  };
+
   var onMainPinClick = function (evt) {
     if (evt.button === 0) {
       activatePage();
@@ -35,5 +48,6 @@
 
   window.main = {
     isPageActive: false,
+    deactivatePage: deactivatePage,
   };
 })();
