@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
+
   var saveURL = 'https://javascript.pages.academy/keksobooking';
   var loadURL = 'https://javascript.pages.academy/keksobooking/data';
   var StatusCode = {
@@ -57,9 +60,69 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
+  var removeSuccessFormSubmitMessage = function () {
+    document.querySelector('main .success').remove();
+    document.removeEventListener('keydown', onSuccessMessageEscPress);
+    document.removeEventListener('click', onSuccessMessageClick);
+  };
+
+  var onSuccessMessageEscPress = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      removeSuccessFormSubmitMessage();
+    }
+  };
+
+  var onSuccessMessageClick = function (evt) {
+    if (evt.target !== document.querySelector('.success__message')) {
+      evt.preventDefault();
+      removeSuccessFormSubmitMessage();
+    }
+  };
+
+  var showSuccessFormSubmitMessage = function () {
+    var successMessageElement = successMessageTemplate.cloneNode(true);
+    document.querySelector('main').appendChild(successMessageElement);
+    document.addEventListener('keydown', onSuccessMessageEscPress);
+    document.addEventListener('click', onSuccessMessageClick);
+  };
+
+  var removeErrorFormSubmitMessage = function () {
+    document.querySelector('main .error').remove();
+    document.removeEventListener('keydown', onErrorMessageEscPress);
+    document.removeEventListener('click', onErrorMessageClick);
+  };
+
+  var onErrorMessageEscPress = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      removeErrorFormSubmitMessage();
+    }
+  };
+
+  var onErrorMessageClick = function (evt) {
+    if (evt.target !== document.querySelector('.error__message')) {
+      evt.preventDefault();
+      removeErrorFormSubmitMessage();
+    }
+  };
+
+  var showErrorFormSubmitMessage = function () {
+    var errorMessageElement = errorMessageTemplate.cloneNode(true);
+    errorMessageElement.querySelector('.error__button').addEventListener('click', function (evt) {
+      evt.preventDefault();
+      removeErrorFormSubmitMessage();
+    });
+    document.querySelector('main').appendChild(errorMessageElement);
+    document.addEventListener('keydown', onErrorMessageEscPress);
+    document.addEventListener('click', onErrorMessageClick);
+  };
+
   window.backend = {
     save: save,
     load: load,
     onError: onError,
+    showSuccessFormSubmitMessage: showSuccessFormSubmitMessage,
+    showErrorFormSubmitMessage: showErrorFormSubmitMessage,
   };
 })();

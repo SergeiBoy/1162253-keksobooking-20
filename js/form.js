@@ -115,8 +115,13 @@
     evt.preventDefault();
     window.backend.save(new FormData(form), function () {
       window.main.deactivatePage();
-      console.log('OK');
-    }, window.backend.onError);
+      window.backend.showSuccessFormSubmitMessage();
+    }, window.backend.showErrorFormSubmitMessage);
+  };
+
+  var onResetButtonClick = function (evt) {
+    evt.preventDefault();
+    window.main.deactivatePage();
   };
 
   var setFormDisabled = function (isDisabled) {
@@ -144,6 +149,7 @@
       selectTimeIn.removeEventListener('change', onSelectTimeInChange);
       selectTimeOut.removeEventListener('change', onSelectTimeOutChange);
       form.removeEventListener('submit', onFormSubmit);
+      resetButton.removeEventListener('click', onResetButtonClick);
       inputPrice.placeholder = initialPricePlaceholder;
       avatarPreview.src = initialAvatarSrc;
       housingPhotoPreview.src = initialPhotoSrc;
@@ -157,6 +163,7 @@
       selectTimeIn.addEventListener('change', onSelectTimeInChange);
       selectTimeOut.addEventListener('change', onSelectTimeOutChange);
       form.addEventListener('submit', onFormSubmit);
+      resetButton.addEventListener('click', onResetButtonClick);
     }
   };
 
