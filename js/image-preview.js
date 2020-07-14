@@ -4,6 +4,15 @@
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   var showImagePreview = function (fileChooser, preview) {
+    if (preview.tagName === 'DIV') {
+      var imgPreview = document.createElement('img');
+      imgPreview.style.width = '100%';
+      imgPreview.style.height = '100%';
+      imgPreview.alt = '';
+      preview.appendChild(imgPreview);
+      preview = imgPreview;
+    }
+
     fileChooser.addEventListener('change', function () {
       var file = fileChooser.files[0];
       var fileName = file.name.toLowerCase();

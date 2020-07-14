@@ -24,8 +24,7 @@
   var initialAvatarSrc = avatarPreview.src;
 
   var housingPhotoChooser = form.querySelector('.ad-form__input');
-  var housingPhotoPreview = form.querySelector('.ad-form__photo img');
-  var initialPhotoSrc = housingPhotoPreview.src;
+  var housingPhotoPreview = form.querySelector('.ad-form__photo');
 
   var MAIN_PIN_X_OFFSET_INACTIVE = 33;
   var MAIN_PIN_Y_OFFSET_INACTIVE = 33;
@@ -125,6 +124,8 @@
   };
 
   var setFormDisabled = function (isDisabled) {
+    var imgPreview = housingPhotoPreview.querySelector('img');
+
     inputAvatarImage.disabled = isDisabled;
     inputTitle.disabled = isDisabled;
     inputAddress.disabled = isDisabled;
@@ -152,7 +153,9 @@
       resetButton.removeEventListener('click', onResetButtonClick);
       inputPrice.placeholder = initialPricePlaceholder;
       avatarPreview.src = initialAvatarSrc;
-      housingPhotoPreview.src = initialPhotoSrc;
+      if (imgPreview) {
+        imgPreview.src = '';
+      }
     } else {
       form.classList.remove('ad-form--disabled');
       coordinateGuestsRooms();
