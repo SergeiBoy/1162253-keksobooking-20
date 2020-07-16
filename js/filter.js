@@ -71,7 +71,7 @@
     window.map.renderPins(filterOffers(window.data.offers));
   });
 
-  var onSelectChange = function () {
+  var onFilterFormChange = function () {
     window.card.closeOpenCard();
     renderPinsOnFilterChange();
   };
@@ -84,17 +84,9 @@
     fieldsetFilterFeatures.disabled = isDisabled;
 
     if (isDisabled) {
-      selectFilterHousingType.removeEventListener('change', onSelectChange);
-      selectFilterPrice.removeEventListener('change', onSelectChange);
-      selectFilterRoomNumber.removeEventListener('change', onSelectChange);
-      selectFilterGuestCapacity.removeEventListener('change', onSelectChange);
-      fieldsetFilterFeatures.removeEventListener('change', onSelectChange);
+      filter.removeEventListener('change', onFilterFormChange);
     } else {
-      selectFilterHousingType.addEventListener('change', onSelectChange);
-      selectFilterPrice.addEventListener('change', onSelectChange);
-      selectFilterRoomNumber.addEventListener('change', onSelectChange);
-      selectFilterGuestCapacity.addEventListener('change', onSelectChange);
-      fieldsetFilterFeatures.addEventListener('change', onSelectChange);
+      filter.addEventListener('change', onFilterFormChange);
     }
   };
 
