@@ -3,7 +3,7 @@
 (function () {
   var MAX_PIN_ON_MAP_QUANTITY = 5;
 
-  var filter = document.querySelector('.map__filters-container');
+  var filter = document.querySelector('.map__filters');
   var selectFilterHousingType = filter.querySelector('#housing-type');
   var selectFilterPrice = filter.querySelector('#housing-price');
   var selectFilterRoomNumber = filter.querySelector('#housing-rooms');
@@ -36,6 +36,7 @@
   };
 
   window.filter = {
+    filter: filter,
     setFilterDisabled: setFilterDisabled,
     filterOffers: filterOffers,
   };
