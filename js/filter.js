@@ -23,52 +23,46 @@
 
   var filterOffers = function (offers) {
     offers = offers.filter(function (offer) {
-      return (offer.offer) && (offer.offer.type === selectFilterHousingType.value || selectFilterHousingType.value === 'any');
-    });
-
-    if (selectFilterPrice.value === 'low') {
-      offers = offers.filter(function (offer) {
-        return (offer.offer.price < LOWER_PRICE_LEVEL);
-      });
-    }
-
-    if (selectFilterPrice.value === 'middle') {
-      offers = offers.filter(function (offer) {
-        return (offer.offer.price >= LOWER_PRICE_LEVEL && offer.offer.price <= HIGHER_PRICE_LEVEL);
-      });
-    }
-
-    if (selectFilterPrice.value === 'high') {
-      offers = offers.filter(function (offer) {
-        return (offer.offer.price > HIGHER_PRICE_LEVEL);
-      });
-    }
-
-    if (selectFilterRoomNumber.value !== 'any') {
-      offers = offers.filter(function (offer) {
-        return (offer.offer.rooms === +selectFilterRoomNumber.value);
-      });
-    }
-
-    if (selectFilterGuestCapacity.value !== 'any' && selectFilterGuestCapacity.value !== '0') {
-      offers = offers.filter(function (offer) {
-        return (offer.offer.guests >= +selectFilterGuestCapacity.value);
-      });
-    }
-
-    if (selectFilterGuestCapacity.value === '0') {
-      offers = offers.filter(function (offer) {
-        return (offer.offer.guests === +selectFilterGuestCapacity.value);
-      });
-    }
-
-    for (var i = 0; i < featureCheckboxes.length; i++) {
-      if (featureCheckboxes[i].checked) {
-        offers = offers.filter(function (offer) {
-          return (offer.offer.features.indexOf(window.data.FEATURES[i]) !== -1);
-        });
+      if (!offer.offer) {
+        return false;
       }
-    }
+
+      if (selectFilterHousingType.value !== 'any' && offer.offer.type !== selectFilterHousingType.value) {
+        return false;
+      }
+
+      if (selectFilterPrice.value === 'low' && offer.offer.price >= LOWER_PRICE_LEVEL) {
+        return false;
+      }
+
+      if (selectFilterPrice.value === 'middle' && (offer.offer.price < LOWER_PRICE_LEVEL || offer.offer.price > HIGHER_PRICE_LEVEL)) {
+        return false;
+      }
+
+      if (selectFilterPrice.value === 'high' && offer.offer.price <= HIGHER_PRICE_LEVEL) {
+        return false;
+      }
+
+      if (selectFilterRoomNumber.value !== 'any' && offer.offer.rooms !== +selectFilterRoomNumber.value) {
+        return false;
+      }
+
+      if (selectFilterGuestCapacity.value !== 'any' && selectFilterGuestCapacity.value !== '0' && offer.offer.guests < +selectFilterGuestCapacity.value) {
+        return false;
+      }
+
+      if (selectFilterGuestCapacity.value === '0' && offer.offer.guests !== +selectFilterGuestCapacity.value) {
+        return false;
+      }
+
+      for (var i = 0; i < featureCheckboxes.length; i++) {
+        if (featureCheckboxes[i].checked && offer.offer.features.indexOf(window.data.FEATURES[i]) === -1) {
+          return false;
+        }
+      }
+
+      return true;
+    });
 
     return offers.slice(0, MAX_PIN_ON_MAP_QUANTITY);
   };
