@@ -15,9 +15,10 @@
   };
 
   var removeActiveClassForPin = function () {
-    pinsOnMap.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (item) {
-      item.classList.remove('map__pin--active');
-    });
+    var activePin = pinsOnMap.querySelector('.map__pin--active');
+    if (activePin) {
+      activePin.classList.remove('map__pin--active');
+    }
   };
 
   var renderPins = function (offers) {
