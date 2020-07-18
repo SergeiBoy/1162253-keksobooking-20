@@ -14,6 +14,13 @@
     });
   };
 
+  var removeActiveClassForPin = function () {
+    var activePin = pinsOnMap.querySelector('.map__pin--active');
+    if (activePin) {
+      activePin.classList.remove('map__pin--active');
+    }
+  };
+
   var renderPins = function (offers) {
 
     removePins();
@@ -34,12 +41,14 @@
     var pinElement = evt.target.closest('.map__pin:not(.map__pin--main)');
     if (pinElement) {
       window.card.closeOpenCard();
+      pinElement.classList.add('map__pin--active');
       window.card.renderOffer(pinElement.offering);
     }
   });
 
   window.map = {
     removePins: removePins,
+    removeActiveClassForPin: removeActiveClassForPin,
     renderPins: renderPins,
     setMainPinInInitialPosition: setMainPinInInitialPosition,
     map: map,

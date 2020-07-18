@@ -31,6 +31,7 @@
     var openCard = document.querySelector('.map__card');
     if (openCard) {
       openCard.remove();
+      window.map.removeActiveClassForPin();
     }
     document.removeEventListener('keydown', onOpenCardEscPress);
   };
@@ -40,6 +41,7 @@
     if (evt.key === 'Escape' && openCard) {
       evt.preventDefault();
       openCard.remove();
+      window.map.removeActiveClassForPin();
     }
     document.removeEventListener('keydown', onOpenCardEscPress);
   };
