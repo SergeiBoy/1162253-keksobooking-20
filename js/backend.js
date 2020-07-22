@@ -51,16 +51,16 @@
   };
 
   var showErrorMessage = function (errorMessage) {
-    var node = document.createElement('div');
-    node.classList.add('error-message');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
+    var messageElement = document.createElement('div');
+    messageElement.classList.add('error-message');
+    messageElement.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    messageElement.style.position = 'absolute';
+    messageElement.style.left = 0;
+    messageElement.style.right = 0;
+    messageElement.style.fontSize = '30px';
 
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
+    messageElement.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', messageElement);
   };
 
   var removeErrorMessage = function () {
