@@ -8,7 +8,7 @@
       window.map.renderPins(window.filter.selectOffers(offers));
       window.data.offers = offers;
       window.filter.setFormDisabled(false);
-    }, window.backend.onError);
+    }, window.backend.showErrorMessage);
 
     window.advertisement.setFormDisabled(false);
     window.main.isPageActive = true;

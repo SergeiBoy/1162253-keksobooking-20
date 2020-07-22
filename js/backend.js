@@ -50,9 +50,9 @@
     sendRequest(onLoad, onError);
   };
 
-  var onError = function (errorMessage) {
+  var showErrorMessage = function (errorMessage) {
     var node = document.createElement('div');
-    node.classList.add('error_message');
+    node.classList.add('error-message');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
     node.style.position = 'absolute';
     node.style.left = 0;
@@ -64,7 +64,7 @@
   };
 
   var removeErrorMessage = function () {
-    var errorMessage = document.querySelector('.error_message');
+    var errorMessage = document.querySelector('.error-message');
     if (errorMessage) {
       errorMessage.remove();
     }
@@ -131,7 +131,7 @@
   window.backend = {
     save: save,
     load: load,
-    onError: onError,
+    showErrorMessage: showErrorMessage,
     removeErrorMessage: removeErrorMessage,
     showSuccessFormSubmitMessage: showSuccessFormSubmitMessage,
     showErrorFormSubmitMessage: showErrorFormSubmitMessage,
