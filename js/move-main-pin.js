@@ -39,15 +39,15 @@
       };
 
       if (window.main.isPageActive) {
-        correctMainPinOffset(window.form.MAIN_PIN_X_OFFSET_ACTIVE, window.form.MAIN_PIN_Y_OFFSET_ACTIVE);
+        correctMainPinOffset(window.advertisement.MAIN_PIN_X_OFFSET_ACTIVE, window.advertisement.MAIN_PIN_Y_OFFSET_ACTIVE);
       } else {
-        correctMainPinOffset(window.form.MAIN_PIN_X_OFFSET_INACTIVE, window.form.MAIN_PIN_Y_OFFSET_INACTIVE);
+        correctMainPinOffset(window.advertisement.MAIN_PIN_X_OFFSET_INACTIVE, window.advertisement.MAIN_PIN_Y_OFFSET_INACTIVE);
       }
 
       window.map.mainPin.style.left = mainPinStyleLeft + 'px';
       window.map.mainPin.style.top = mainPinStyleTop + 'px';
 
-      window.form.setAddress(mainPinStyleLeft, mainPinStyleTop, window.main.isPageActive);
+      window.advertisement.setAddress(mainPinStyleLeft, mainPinStyleTop, window.main.isPageActive);
     };
 
     var onMouseMove = function (moveEvt) {

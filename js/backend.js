@@ -1,15 +1,17 @@
 'use strict';
 
 (function () {
+  var TIMEOUT_IN_MS = 10000;
+
+  var StatusCode = {
+    OK: 200,
+  };
+
   var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 
   var saveURL = 'https://javascript.pages.academy/keksobooking';
   var loadURL = 'https://javascript.pages.academy/keksobooking/data';
-  var StatusCode = {
-    OK: 200,
-  };
-  var TIMEOUT_IN_MS = 10000;
 
   var sendRequest = function (onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
@@ -50,6 +52,7 @@
 
   var onError = function (errorMessage) {
     var node = document.createElement('div');
+    node.classList.add('error_message');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
     node.style.position = 'absolute';
     node.style.left = 0;
@@ -58,6 +61,13 @@
 
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  var removeErrorMessage = function () {
+    var errorMessage = document.querySelector('.error_message');
+    if (errorMessage) {
+      errorMessage.remove();
+    }
   };
 
   var removeSuccessFormSubmitMessage = function () {
@@ -122,6 +132,7 @@
     save: save,
     load: load,
     onError: onError,
+    removeErrorMessage: removeErrorMessage,
     showSuccessFormSubmitMessage: showSuccessFormSubmitMessage,
     showErrorFormSubmitMessage: showErrorFormSubmitMessage,
   };

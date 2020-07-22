@@ -27,7 +27,7 @@
     }
   };
 
-  var closeOpenCard = function () {
+  var close = function () {
     var openCard = document.querySelector('.map__card');
     if (openCard) {
       openCard.remove();
@@ -46,7 +46,7 @@
     document.removeEventListener('keydown', onOpenCardEscPress);
   };
 
-  var renderOffer = function (offering) {
+  var render = function (offering) {
     var offerElement = offerTemplate.cloneNode(true);
     var roomsForGuests = offerElement.querySelector('.popup__text--capacity');
     var checkinCheckout = offerElement.querySelector('.popup__text--time');
@@ -100,7 +100,7 @@
     offerElement.querySelector('.popup__avatar').src = offering.author.avatar;
 
     offerElement.querySelector('.popup__close').addEventListener('click', function () {
-      closeOpenCard();
+      close();
     });
 
     document.addEventListener('keydown', onOpenCardEscPress);
@@ -109,7 +109,7 @@
   };
 
   window.card = {
-    renderOffer: renderOffer,
-    closeOpenCard: closeOpenCard,
+    render: render,
+    close: close,
   };
 })();

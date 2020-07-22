@@ -3,7 +3,7 @@
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-  var showImagePreview = function (fileChooser, preview) {
+  var show = function (fileChooser, preview) {
     if (preview.tagName === 'DIV') {
       var imgPreview = document.createElement('img');
       imgPreview.style.width = '100%';
@@ -34,6 +34,6 @@
   };
 
   window.imagePreview = {
-    showImagePreview: showImagePreview,
+    show: show,
   };
 })();

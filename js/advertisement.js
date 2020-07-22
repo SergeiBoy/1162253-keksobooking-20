@@ -1,6 +1,11 @@
 'use strict';
 
 (function () {
+  var MAIN_PIN_X_OFFSET_INACTIVE = 33;
+  var MAIN_PIN_Y_OFFSET_INACTIVE = 33;
+  var MAIN_PIN_X_OFFSET_ACTIVE = 33;
+  var MAIN_PIN_Y_OFFSET_ACTIVE = 76;
+
   var form = document.querySelector('.ad-form');
   var inputAvatarImage = form.querySelector('#avatar');
   var inputTitle = form.querySelector('#title');
@@ -26,11 +31,6 @@
   var housingPhotoChooser = form.querySelector('.ad-form__input');
   var housingPhotoPreview = form.querySelector('.ad-form__photo');
 
-  var MAIN_PIN_X_OFFSET_INACTIVE = 33;
-  var MAIN_PIN_Y_OFFSET_INACTIVE = 33;
-  var MAIN_PIN_X_OFFSET_ACTIVE = 33;
-  var MAIN_PIN_Y_OFFSET_ACTIVE = 76;
-
   var coordinateGuestsRooms = function () {
     if (selectRoomNumber.value === '1' && selectGuestCapacity.value !== '1') {
       selectGuestCapacity.setCustomValidity('Для одной комнаты вы можете выбрать только "для одного гостя"');
@@ -53,19 +53,19 @@
     var minPrice;
     var housingType = selectHousingType.value;
     switch (housingType) {
-      case ('bungalo'): {
+      case (window.data.APARTMENT_TYPES[3]): {
         minPrice = '0';
         break;
       }
-      case ('flat'): {
+      case (window.data.APARTMENT_TYPES[1]): {
         minPrice = '1000';
         break;
       }
-      case ('house'): {
+      case (window.data.APARTMENT_TYPES[2]): {
         minPrice = '5000';
         break;
       }
-      case ('palace'): {
+      case (window.data.APARTMENT_TYPES[0]): {
         minPrice = '10000';
         break;
       }
@@ -83,23 +83,11 @@
   };
 
   var onSelectTimeInChange = function () {
-    if (selectTimeIn.value === '12:00') {
-      selectTimeOut.value = '12:00';
-    } else if (selectTimeIn.value === '13:00') {
-      selectTimeOut.value = '13:00';
-    } else if (selectTimeIn.value === '14:00') {
-      selectTimeOut.value = '14:00';
-    }
+    selectTimeOut.value = selectTimeIn.value;
   };
 
   var onSelectTimeOutChange = function () {
-    if (selectTimeOut.value === '12:00') {
-      selectTimeIn.value = '12:00';
-    } else if (selectTimeOut.value === '13:00') {
-      selectTimeIn.value = '13:00';
-    } else if (selectTimeOut.value === '14:00') {
-      selectTimeIn.value = '14:00';
-    }
+    selectTimeIn.value = selectTimeOut.value;
   };
 
   var setAddress = function (left, top, isPageActive) {
@@ -170,10 +158,10 @@
     }
   };
 
-  window.imagePreview.showImagePreview(avatarChooser, avatarPreview);
-  window.imagePreview.showImagePreview(housingPhotoChooser, housingPhotoPreview);
+  window.imagePreview.show(avatarChooser, avatarPreview);
+  window.imagePreview.show(housingPhotoChooser, housingPhotoPreview);
 
-  window.form = {
+  window.advertisement = {
     form: form,
     setFormDisabled: setFormDisabled,
     setAddress: setAddress,
